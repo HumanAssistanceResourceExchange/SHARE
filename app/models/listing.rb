@@ -11,6 +11,16 @@ class Listing < ActiveRecord::Base
     self.image_url || 'http://placehold.it/400x300&text=[img]'
   end
 
+  def self.import(file)
+    CSV.foreach(file.path, headers: true) do |row|
+      logger.debug "ROW: #{row}"
+      listing = find_by_id(row['id']) || new
+      listing.attributes = row.to_hash
+      logger.debug "LISTING: #{listing}"
+      listing.save!
+    end
+  end
+
   def requires_pdf_form?
     # !self.pdf.nil?
     self.creator.entity_name == "Sacramento County"
