@@ -31,7 +31,7 @@ class DonationApplicationMailer < ApplicationMailer
   end
 
   private
-    def listing_params
-      params.require(:listing).permit([:id])
-    end
+  def listing_params
+    params.require(:listing).permit([:id])
+  end
 end
