@@ -96,6 +96,15 @@ class ListingsController < ApplicationController
     end
   end
 
+  def new_import
+    #
+  end
+
+  def import
+    Listing.import(params[:file])
+    redirect_to listings_path, :notice => "Your listings have been imported"
+  end
+
   private
 
   def set_listings_index(default = listings_path )
