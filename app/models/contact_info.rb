@@ -8,4 +8,8 @@ class ContactInfo < ActiveRecord::Base
   def last_and_first
     @last_and_first = last_name + ', ' + first_name
   end
+
+  def first_and_last
+    @first_and_last = first_name + ' ' + last_name
+  end
 end
