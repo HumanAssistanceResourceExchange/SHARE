@@ -97,12 +97,29 @@ class ListingsController < ApplicationController
   end
 
   def new_import
-    #
+    # render
   end
 
   def import
-    Listing.import(params[:file])
-    redirect_to listings_path, :notice => "Your listings have been imported"
+    file = params[:file]
+
+    if file.nil?
+      redirect_to import_listing_path, :notice => "No file chosen" and return
+    end
+
+    @importer = Importer.new({
+      creator: current_user,
+      import_type: "listing",
+      parser: SpreadsheetParser.new(file: file, import_type: "listing")
+    })
+
+    if @importer.import
+      message = "#{@importer.records_created} listings have been imported."
+      message += "\nErrors: " + @importer.errors.join("\n") if @importer.errors.any?
+      redirect_to user_donations_path(current_user), :notice => message and return
+    else
+      redirect_to import_listing_path, :notice => @importer.errors.join("\n") and return
+    end
   end
 
   private
