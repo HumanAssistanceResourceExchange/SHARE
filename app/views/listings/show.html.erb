@@ -31,7 +31,7 @@
                 Applicant Contact
               </div>
               <div class="small-4 medium-4 column end">
-                <select>
+                <select name="contact" id="contact">
                   <option value="">Select Contact</option>
                   <% @contact_list.each do |c| %>
                       <option value="<%= c.id %>"><%= c.first_and_last %>, <%= number_to_phone(c.phone) %></option>
