@@ -11,7 +11,7 @@
       <% end %>
   <% elsif !@donee.contact_infos.nil? %>
       <% unless @donee.contact_infos.empty? %>
-          <%= @donee.contact_infos.first_name %>
+          <%= @donee.contact_infos.first.first_name %>
       <% end %>
   <% else %>
       SHARE User

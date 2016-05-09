@@ -32,10 +32,10 @@
   <% end %>
   <% unless @donee.contact_infos.nil? %>
       <% unless @donee.contact_infos.empty? %>
-          <li>Name: <%= @donee.contact_infos.first_name %> <%= @donee.contact_infos.last_name %></li>
-          <li>Phone: <%= @donee.contact_infos.phone %></li>
-          <% unless @donee.contact_infos.fax.empty? %>
-              <li>Fax: <%= @donee.contact_infos.fax %></li>
+          <li>Name: <%= @donee.contact_infos.first.first_name %> <%= @donee.contact_infos.first.last_name %></li>
+          <li>Phone: <%= @donee.contact_infos.first.phone %></li>
+          <% unless @donee.contact_infos.first.fax.empty? %>
+              <li>Fax: <%= @donee.contact_infos.first.fax %></li>
           <% end %>
       <% end %>
   <% end %>
@@ -44,7 +44,7 @@
 <p>Please contact
   <% unless @donee.contact_infos.nil? %>
       <% if !@donee.contact_infos.empty? %>
-          <%= @donee.contact_infos.first_name %> <%= @donee.contact_infos.last_name %>,
+          <%= @donee.contact_infos.first.first_name %> <%= @donee.contact_infos.first.last_name %>,
       <% else %>
           the donee
       <% end %>

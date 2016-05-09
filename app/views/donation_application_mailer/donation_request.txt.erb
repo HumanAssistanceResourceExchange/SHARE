@@ -23,7 +23,7 @@ Fax: <%= @donee.contact_infos.first.fax %>
 Email: <%= @donee.email %>
 
 
-Please contact <% unless @donee.contact_infos.nil? %><% if !@donee.contact_infos.empty? %> <%= @donee.contact_infos.first_name %> <%= @donee.contact_infos.last_name %>,<% else %>the donee<% end %><% end %> at your earliest convenience!
+Please contact <% unless @donee.contact_infos.nil? %><% if !@donee.contact_infos.empty? %> <%= @donee.contact_infos.first.first_name %> <%= @donee.contact_infos.first.last_name %>,<% else %>the donee<% end %><% end %> at your earliest convenience!
 
 
 Thank you!
