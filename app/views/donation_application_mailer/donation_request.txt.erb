@@ -10,8 +10,10 @@ http://sac.hare.tech and respond to this request.
 
 Donee Contact Information
 -------------------------
+<% if !@donee.entity_name.nil? %>
 <% unless @donee.entity_name.empty? %>
 Entity Name: <%= @donee.entity_name %>
+<% end %>
 <% end %>
 <% unless @donee.contact_infos.nil? %>
 <% unless @donee.contact_infos.empty? %>
