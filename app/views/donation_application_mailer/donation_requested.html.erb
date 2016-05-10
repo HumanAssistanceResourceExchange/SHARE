@@ -11,7 +11,7 @@
       <% end %>
   <% elsif !@donee.contact_infos.nil? %>
       <% unless @donee.contact_infos.empty? %>
-          <%= @donee.contact_infos.first_name %>
+          <%= @donee.contact_infos.first.first_name %>
       <% end %>
   <% else %>
       SHARE User
@@ -22,9 +22,9 @@
       <% unless @donor.entity_name.empty? %>
           <%= @donor.entity_name %>
       <% end %>
-  <% elsif !@donor.contact_infos.nil? %>
-      <% unless @donor.contact_infos.empty? %>
-          <%= @donor.contact_infos.first_name %>
+  <% elsif !@listing.contact.nil? %>
+      <% unless @listing.contact.empty? %>
+          <%= @listing.contact.first_name %> <%= @listing.contact.last_name %>
       <% end %>
   <% end %>.</p>
 <blockquote>

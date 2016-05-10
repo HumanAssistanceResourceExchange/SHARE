@@ -7,6 +7,8 @@
       <%= f.input :image_url, label: "Image Url (optional)" %>
       <%= f.label :category %>
       <%= f.collection_select :category_ids, Category.order(:name), :id, :name, {}, { multiple: false } %>
+      <%= f.label :contact_infos, 'Primary Contact' %>
+      <%= f.collection_select :contact, ContactInfo.order(:last_name), :id, :last_and_first, {}, { multiple: false } %>
     </div>
 
     <div class="form-actions">

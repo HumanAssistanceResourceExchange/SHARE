@@ -34,6 +34,8 @@ class ListingsController < ApplicationController
       @application_submission = current_user.donation_applications.find_by(listing: @listing)
       applications = DonationApplication.includes(:applicant).where(listing: @listing).order(submission_date: :asc, created_at: :asc).reject { |da| da.submission_date.nil? }
 
+      @contact_list = current_user.contact_infos
+
       @applications_received = applications.map do | application |
         { tracker: application,
           applicant: get_applicant_info(application.applicant) }

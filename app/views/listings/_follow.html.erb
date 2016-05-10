@@ -1,10 +1,10 @@
 <% unless current_user == @listing.creator %>
     <% if is_followed? @listing.id %>
-        <%= button_to [ :unfollow, @listing ], {class: 'button small radius'} do %>
+        <%= link_to [ :unfollow, @listing ] do %>
         <%= content_tag(:i, "", :class => "fa fa-eye-slash fa-lg") %>
         Un-Watch<% end %>
     <% else %>
-        <%= button_to [ :follow, @listing ], {class: 'button small radius'} do %>
+        <%= link_to [ :follow, @listing ] do %>
         <%= content_tag(:i, "", :class => "fa fa-eye fa-lg") %>
         Watch<% end %>
     <% end %>
