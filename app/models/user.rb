@@ -1,7 +1,7 @@
 class User < ActiveRecord::Base
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable and :omniauthable
-  devise :database_authenticatable, :registerable,
+  devise :database_authenticatable,
          :recoverable, :rememberable, :trackable, :validatable, :confirmable
 
   has_many :users_questionnaires, dependent: :destroy
@@ -14,7 +14,7 @@ class User < ActiveRecord::Base
 
   before_create :set_account_type
 
-  # TODO Allow user to select default account type
+  # TODO Create different registration paths for orgs and individuals
   def set_account_type
       self.account_type = "organization"
   end
