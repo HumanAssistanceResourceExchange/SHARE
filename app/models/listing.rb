@@ -7,6 +7,8 @@ class Listing < ActiveRecord::Base
   has_many :donation_applications, dependent: :destroy
   has_many :applicants, through: :donation_applications
 
+  validates_presence_of :title, :creator
+
   def get_show_image
     self.image_url || 'http://placehold.it/400x300&text=[img]'
   end

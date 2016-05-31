@@ -5,9 +5,12 @@ Rails.application.routes.draw do
   devise_for :admin_users, ActiveAdmin::Devise.config
   ActiveAdmin.routes(self)
 
+  get 'listings/import', to: 'listings#new_import', as: 'new_import_listing'
+  post 'listings/import', to: 'listings#import', as: 'import_listing'
   get 'listings/browse', to: 'categories#index'
   post 'listings/:id/track', to: 'listings#follow', as: 'follow_listing'
   post 'listings/:id/stop_tracking', to: 'listings#unfollow', as: 'unfollow_listing'
+
   resources :listings do
     post 'applicant_review', to: 'listings#applicant_review'
     post 'donation_applications', to: 'donation_applications#create'

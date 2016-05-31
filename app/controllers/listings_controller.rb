@@ -5,6 +5,7 @@ class ListingsController < ApplicationController
   before_action :authenticate_user!, except: [:index, :show]
 
   def new
+    @page_title = "Create New Listing"
     @listing = Listing.new
   end
 
@@ -93,6 +94,32 @@ class ListingsController < ApplicationController
       follow_id = current_user.followed_listings.where(listing_id: listing_id).first.id
       current_user.followed_listings.delete(follow_id)
       redirect_to :back
+    end
+  end
+
+  def new_import
+    # render
+  end
+
+  def import
+    file = params[:file]
+
+    if file.nil?
+      redirect_to import_listing_path, :notice => "No file chosen" and return
+    end
+
+    @importer = Importer.new({
+      creator: current_user,
+      import_type: "listing",
+      parser: SpreadsheetParser.new(file: file, import_type: "listing")
+    })
+
+    if @importer.import
+      message = "#{@importer.records_created} listings have been imported."
+      message += "\nErrors: " + @importer.errors.join("\n") if @importer.errors.any?
+      redirect_to user_donations_path(current_user), :notice => message and return
+    else
+      redirect_to import_listing_path, :notice => @importer.errors.join("\n") and return
     end
   end
 
