@@ -1,8 +1,8 @@
-Dear <% if !@donor.entity_name.nil? %><% unless @donor.entity_name.empty? %><%= @donor.entity_name %><% end %><% elsif !@donor.contact_infos.nil? %><% unless @donor.contact_infos.empty? %><%= @donor.contact_infos.first_name %><% end %><% else %>SHARE User<% end %>,
+Dear <% if !@donor.entity_name.nil? %><% unless @donor.entity_name.empty? %><%= @donor.entity_name %><% end %><% elsif !@donor.contact_infos.nil? %><% @donor.contact_infos.each do |c| %><% if c and (c.primary or @donor.contact_infos.length == 1) %><%= c.first_name %><% end %><% end %><% else %>SHARE User<% end %>,
 
 
 You have a donation request for <%= @listing.title %>. Please log into your dashboard at
-http://sac.hare.tech and respond to this request.
+http://s.hare.tech and respond to this request.
 
 
 <%= @listing.description %>
@@ -10,22 +10,13 @@ http://sac.hare.tech and respond to this request.
 
 Donee Contact Information
 -------------------------
-<% unless @donee.entity_name.empty? %>
-Entity Name: <%= @donee.entity_name %>
-<% end %>
-<% unless @donee.contact_infos.nil? %>
-<% unless @donee.contact_infos.empty? %>
-<li>Name: <%= @donee.contact_infos.first_name %> <%= @donee.contact_infos.last_name %></li>
-<li>Phone: <%= @donee.contact_infos.phone %></li>
-<% unless @donee.contact_infos.fax.empty? %>
-Fax: <%= @donee.contact_infos.fax %>
-<% end %>
-<% end %>
-<% end %>
+<% unless @donee.entity_name.nil? %>Entity Name: <%= @donee.entity_name %><% end %>
+<% unless @donee.contact_infos.nil? %><% @donee.contact_infos.each do |d| %><% if d and (d.primary or @donee.contact_infos.length == 1) %>Name: <% unless d.first_name.blank? %><%= d.first_name %><% end %> <% unless d.last_name.blank? %><%= d.last_name %><% end %>
+<% unless d.phone.blank? %>Phone: <%= d.phone %><% end %>
+<% unless d.fax.blank? %>Fax: <%= d.fax %><% end %><% end %><% end %><% end %>
 Email: <%= @donee.email %>
 
-
-Please contact <% unless @donee.contact_infos.nil? %><% if !@donee.contact_infos.empty? %> <%= @donee.contact_infos.first_name %> <%= @donee.contact_infos.last_name %>,<% else %>the donee<% end %><% end %> at your earliest convenience!
+Please contact the donee at your earliest convenience!
 
 
 Thank you!
