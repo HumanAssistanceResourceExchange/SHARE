@@ -1,0 +1,6 @@
+# Save a copy of this file as "application.yml" on the production box
+# Add configuration files here
+
+HARETECH_USERNAME:  # Username here for sending email
+HARETECH_PASSWORD:  # Password (can use Gmail configured at "less secure" to pass emails via gmail user/password)
+MAILER_SENDER:      # Email address to send mails from (recommend using the same as HARETECH_USERNAME for best results)
