@@ -11,7 +11,11 @@
       <% end %>
   <% elsif !@donor.contact_infos.nil? %>
       <% unless @donor.contact_infos.empty? %>
-          <%= @donor.contact_infos.first_name %>
+          <% @donor.contact_infos.each do |c| %>
+              <% if c and (c.primary or @donor.contact_infos.length == 1) %>
+                  <%= @donor.contact_infos[0].first_name %>
+              <% end %>
+          <% end %>
       <% end %>
   <% else %>
       SHARE User
@@ -19,14 +23,14 @@
 </h4>
 <p>You have a donation request for <%= @listing.title %>. The donee
   <% unless @donee.contact_infos.nil? %>
-      <% if !@donee.contact_infos.empty? %>
-          <%= @donee.contact_infos.first_name %> <%= @donee.contact_infos.last_name %>,
-      <% else %>
-          the donee
+      <% @donee.contact_infos.each do |d| %>
+          <% if d and (d.primary or @donee.contact_infos.length == 1) %>
+              ,<%= d.first_name %> <%= d.last_name %>,
+          <% end %>
       <% end %>
   <% end %> has mailed the
   "Surplus Donation Application" form. You may track and update this request at
-  <a href="http://sac.hare.tech">http://sac.hare.tech</a>.</p>
+  <a href="http://sac.hare.tech">http://s.hare.tech</a>.</p>
 <p>Thank you!</p>
 <p>Sacramento Human Assistance Resource Exchange (SHARE)</p>
 </body>
