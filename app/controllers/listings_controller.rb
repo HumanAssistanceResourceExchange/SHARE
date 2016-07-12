@@ -1,7 +1,7 @@
 class ListingsController < ApplicationController
   include ListingsHelper
   include UsersHelper
-  include DonationApplicationsHelper
+
   before_action :authenticate_user!, except: [:index, :show]
 
   def new
