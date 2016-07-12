@@ -6,7 +6,8 @@
                 <%= link_to "Back to Listings", session.delete(:listings_index) %>
             </div>
         </div>
-        <div class="row">
+
+        <div class="row listing-content-container">
             <div class="small-4 columns">
                 <img src="<%= @listing.get_show_image %>">
             </div>
@@ -27,10 +28,10 @@
                 </p>
             </div>
         </div>
+
         <% if current_user %>
         <% unless @listing.creator == current_user or @listing.requested?(current_user) %>
         <div class="row">
-            
             <form action="<%= listing_donation_applications_path(:listing_id => @listing.id) %>" method="post" class="panel column small-8 small-offset-4">
                 <input type="hidden" name="<%= request_forgery_protection_token.to_s %>" value="<%= form_authenticity_token %>">
                 <div class="row button-row">
