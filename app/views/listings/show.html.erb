@@ -4,7 +4,7 @@
   <div class="content active" id="listings-item">
     <div class="row">
       <div class="small-4 columns">
-          <img src="<%= @listing.get_show_image %>">
+        <img src="<%= @listing.get_show_image %>">
       </div>
       <div class="small-8 columns">
         <h4><%= @listing.title %></h4>
@@ -15,21 +15,41 @@
       </div>
     </div>
     <div class="row button-row">
-      <div class="small-4 medium-offset-4 medium-2 column">
+      <div class="row">
+        <div class="small-4 medium-offset-4 medium-2 column">
           <%= render 'listings/follow' %>
-      </div>
-      <div class="small-4 medium-3 column">
-          <% if current_user and not already_requested? %>
-            <%= button_to "Request Donation", listing_donation_applications_path(:listing_id => @listing.id), :class => "button small radius", :id => "requestbutton", :method => :post %>
-          <% end %>
-      </div>
-      <div class="small-4 medium-3 column end">
+        </div>
+        <div class="small-4 medium-3 column end">
           <%= link_to "Back to Listings", session.delete(:listings_index) %>
+        </div>
       </div>
+      <form action="<%= listing_donation_applications_path(:listing_id => @listing.id) %>" method="post">
+        <input type="hidden" name="<%= request_forgery_protection_token.to_s %>" value="<%= form_authenticity_token %>">
+        <% if current_user and not already_requested? %>
+            <div class="row button-row">
+              <div class="small-4 medium-offset-4 medium-2 column">
+                Applicant Contact
+              </div>
+              <div class="small-4 medium-4 column end">
+                <select name="contact" id="contact">
+                  <option value="">Select Contact</option>
+                  <% @contact_list.each do |c| %>
+                      <option value="<%= c.id %>"><%= c.first_and_last %>, <%= number_to_phone(c.phone) %></option>
+                  <% end %>
+                </select>
+              </div>
+            </div>
+            <div class="row button-row">
+              <div class="small-4 medium-offset-4 medium-3 column">
+                <button class="button small radius" id="requestbutton" type="submit">Request Donation</button>
+              </div>
+            </div>
+        <% end %>
+      </form>
       <% if current_user && (current_user == @listing.creator) %>
-      <%= render 'donation_application_trackers/show_as_creator' %>
+          <%= render 'donation_application_trackers/show_as_creator' %>
       <% elsif current_user && @listing.applicants.include?(current_user) %>
-      <%= render 'donation_application_trackers/show_as_applicant' %>
+          <%= render 'donation_application_trackers/show_as_applicant' %>
       <% end %>
     </div>
   </div>

@@ -1,4 +1,4 @@
-Dear <% if !@donor.entity_name.nil? %><% unless @donor.entity_name.empty? %><%= @donor.entity_name %><% end %><% elsif !@donor.contact_infos.nil? %><% unless @donor.contact_infos.empty? %><%= @donor.contact_infos.first_name %><% end %><% else %>SHARE User<% end %>,
+Dear  <% if !@donor.entity_name.nil? %><% unless @donor.entity_name.empty? %><%= @donor.entity_name %><% end %><% elsif !@listing.contact.nil? %><% unless @listing.contact.empty? %><%= @listing.contact.first_name %><% end %><% else %>SHARE User<% end %>,
 
 
 You have a donation request for <%= @listing.title %>. Please log into your dashboard at
@@ -10,24 +10,20 @@ http://sac.hare.tech and respond to this request.
 
 Donee Contact Information
 -------------------------
-<% if !@donee.entity_name.nil? %>
-<% unless @donee.entity_name.empty? %>
-Entity Name: <%= @donee.entity_name %>
-<% end %>
-<% end %>
-<% unless @donee.contact_infos.nil? %>
-<% unless @donee.contact_infos.empty? %>
-<li>Name: <%= @donee.contact_infos.first_name %> <%= @donee.contact_infos.last_name %></li>
-<li>Phone: <%= @donee.contact_infos.phone %></li>
-<% unless @donee.contact_infos.fax.empty? %>
-Fax: <%= @donee.contact_infos.fax %>
+<% unless @donee.entity_name.nil? %><% unless @donee.entity_name.empty? %>Entity Name: <%= @donee.entity_name %><% end %><% end %>
+<% unless @donee.contact_infos.first.nil? %>
+<% unless @donee.contact_infos.first.empty? %>
+<li>Name: <%= @donee.contact_infos.first.first_name %> <%= @donee.contact_infos.first.last_name %></li>
+<li>Phone: <%= @donee.contact_infos.first.phone %></li>
+<% unless @donee.contact_infos.first.fax.empty? %>
+Fax: <%= @donee.contact_infos.first.fax %>
 <% end %>
 <% end %>
 <% end %>
 Email: <%= @donee.email %>
 
 
-Please contact <% unless @donee.contact_infos.nil? %><% if !@donee.contact_infos.empty? %> <%= @donee.contact_infos.first_name %> <%= @donee.contact_infos.last_name %>,<% else %>the donee<% end %><% end %> at your earliest convenience!
+Please contact <% unless @donee.contact_infos.nil? %><% if !@donee.contact_infos.empty? %> <%= @donee.contact_infos.first.first_name %> <%= @donee.contact_infos.first.last_name %>,<% else %>the donee<% end %><% end %> at your earliest convenience!
 
 
 Thank you!

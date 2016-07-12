@@ -9,9 +9,9 @@
       <% unless @donor.entity_name.empty? %>
           <%= @donor.entity_name %>
       <% end %>
-  <% elsif !@donor.contact_infos.nil? %>
-      <% unless @donor.contact_infos.empty? %>
-          <%= @donor.contact_infos.first_name %>
+  <% elsif !@listing.contact.nil? %>
+      <% unless @listing.contact.empty? %>
+          <%= @listing.contact.first_name %>
       <% end %>
   <% else %>
       SHARE User
@@ -20,7 +20,7 @@
 <p>You have a donation request for <%= @listing.title %>. The donee
   <% unless @donee.contact_infos.nil? %>
       <% if !@donee.contact_infos.empty? %>
-          <%= @donee.contact_infos.first_name %> <%= @donee.contact_infos.last_name %>,
+          <%= @donee.contact_infos.first.first_name %> <%= @donee.contact_infos.first.last_name %>,
       <% else %>
           the donee
       <% end %>
