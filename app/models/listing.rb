@@ -15,4 +15,12 @@ class Listing < ActiveRecord::Base
     # !self.pdf.nil?
     self.creator.entity_name == "Sacramento County"
   end
+
+  def requested?(user)
+    user.donation_applications.where(listing: self).present?
+  end
+
+  def followed?(user)
+    user && user.followed_listings.where(listing_id: self).present?
+  end
 end

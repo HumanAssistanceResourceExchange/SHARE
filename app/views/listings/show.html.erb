@@ -19,8 +19,10 @@
           <%= render 'listings/follow' %>
       </div>
       <div class="small-4 medium-3 column">
-          <% if current_user and not already_requested? %>
+          <% if current_user %>
+            <% unless @listing.creator == current_user or @listing.requested?(current_user) %>
             <%= button_to "Request Donation", listing_donation_applications_path(:listing_id => @listing.id), :class => "button small radius", :id => "requestbutton", :method => :post %>
+            <% end %>
           <% end %>
       </div>
       <div class="small-4 medium-3 column end">

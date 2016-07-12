@@ -80,20 +80,21 @@ class ListingsController < ApplicationController
   end
 
   def follow
-    listing_id = params[:id]
-    unless view_context.is_followed? listing_id
-      watchlist = current_user.followed_listings.build(listing_id: listing_id).save
+    listing = Listing.find_by(id: params[:id])
+    unless listing.followed?(current_user)
+      current_user.followed_listings.build(listing: listing).save
       redirect_to :back
     end
   end
 
   def unfollow
-    listing_id = params[:id]
-    if view_context.is_followed? listing_id
-      follow_id = current_user.followed_listings.where(listing_id: listing_id).first.id
-      current_user.followed_listings.delete(follow_id)
-      redirect_to :back
+    listing = Listing.find_by(id: params[:id])
+    if listing.followed?(current_user)
+      followed_listing = current_user.followed_listings.find_by(listing: listing)
+      current_user.followed_listings.delete(followed_listing)
     end
+
+    redirect_to :back
   end
 
   private
