@@ -12,15 +12,15 @@
   <tbody>
     <% @applications_received.each do |app| %>
     <tr>
-        <td><%= "#{app[:applicant][:info][:first_name]} #{app[:applicant][:info][:last_name]}".titleize %></td>
-        <td><%= email_break_oppty(app[:tracker].applicant.email.downcase) %></td>
-        <td><%= date_format(app[:tracker][:submission_date]) %></td>
-      <% if app[:tracker][:approval_status] %>
-        <td><%= app[:tracker][:approval_status].titleize %></td>
-        <td><%= link_to "Reset", listing_applicant_reset_path(id: app[:tracker].id, listing_id: @listing.id), method: :post %></td>
+        <td><%= "#{app.first_name} #{app.last_name}".titleize %></td>
+        <td><%= email_formatter(app.email) %></td>
+        <td><%= date_format(app.submission_date) %></td>
+      <% if app.approval_status %>
+        <td><%= app.approval_status.titleize %></td>
+        <td><%= link_to "Reset", listing_applicant_reset_path(id: app.id, listing_id: @listing.id), method: :post %></td>
       <% else %>
-        <td><%= link_to "Approve", listing_applicant_approve_path(id: app[:tracker].id, listing_id: @listing.id), method: :post %></td>
-        <td><%= link_to "Decline", listing_applicant_decline_path(id: app[:tracker].id, listing_id: @listing.id), method: :post %></td>
+        <td><%= link_to "Approve", listing_applicant_approve_path(id: app.id, listing_id: @listing.id), method: :post %></td>
+        <td><%= link_to "Decline", listing_applicant_decline_path(id: app.id, listing_id: @listing.id), method: :post %></td>
       <% end %>
     </tr>
     <% end %>

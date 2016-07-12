@@ -33,14 +33,9 @@ class ListingsController < ApplicationController
     @listing = Listing.find(params[:id])
     if current_user
       @application_submission = current_user.donation_applications.find_by(listing: @listing)
-      applications = DonationApplication.includes(:applicant).where(listing: @listing).order(submission_date: :asc, created_at: :asc).reject { |da| da.submission_date.nil? }
+      @applications_received = DonationApplication.includes(:applicant).where(listing: @listing).order(submission_date: :asc, created_at: :asc).reject { |da| da.submission_date.nil? }
 
       @contact_list = current_user.contact_infos
-
-      @applications_received = applications.map do | application |
-        { tracker: application,
-          applicant: get_applicant_info(application.applicant) }
-      end
     end
   end
 
@@ -135,23 +130,6 @@ class ListingsController < ApplicationController
     else
       session[:listings_index] ||= default
     end
-  end
-
-  def get_applicant_info(applicant, options = {})
-    user = applicant || User.find(options[:user_id])
-    contact ||= options[:contact]
-    contact ||= user.contact_infos.find(options[:contact_info_id]) if options[:contact_info_id]
-    contact ||= user.contact_infos.find_by(primary: true) || user.contact_infos.first
-    address ||= options[:address]
-    address ||= user.addresses.find(options[:address_id]) if options[:address_id]
-    address ||= user.addresses.find_by(primary: true) || user.addresses.first
-
-    applicant = {}
-    applicant[:info] = contact ? contact.attributes : {}
-    applicant[:info].merge! address ? address.attributes : {}
-    applicant[:info].transform_keys! { |k| k.to_sym }
-
-    applicant
   end
 
   def listing_params
