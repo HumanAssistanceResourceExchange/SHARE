@@ -4,8 +4,8 @@ class DonationApplicationPdf < FillablePdfForm
     @user = args[:user]
     @listing = args[:listing]
     @user_questionnaire = Questionnaire.find_by(name: @user.account_type)
-    address = @user.addresses.find_by(primary: true) || @user.addresses.first
-    contact = @user.contact_infos.find_by(primary: true) || @user.contact_infos.first
+    address = args[:address]
+    contact = args[:contact]
     @address = get_sanitized_attributes(address, Address.new)
     @contact = get_sanitized_attributes(contact, ContactInfo.new)
     @contact_name = "#{@contact[:first_name]} #{@contact[:last_name]}".titleize

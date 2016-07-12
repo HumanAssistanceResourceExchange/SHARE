@@ -37,7 +37,7 @@
                 <div class="row button-row">
                     <label class="column end">
                         Applicant Contact
-                        <select name="contact" id="contact">
+                        <select name="contact" id="contact" required>
                             <option value="">Select Contact</option>
                             <% @contact_list.each do |c| %>
                             <option value="<%= c.id %>"><%= c.first_and_last %>, <%= number_to_phone(c.phone) %></option>
