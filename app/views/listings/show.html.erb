@@ -16,23 +16,21 @@
     </div>
     <div class="row button-row">
       <div class="row">
+      <% if current_user %>
+        <% unless @listing.creator == current_user or @listing.followed?(current_user) %>
         <div class="small-4 medium-offset-4 medium-2 column">
           <%= render 'listings/follow' %>
       </div>
-      <div class="small-4 medium-3 column">
-          <% if current_user %>
-            <% unless @listing.creator == current_user or @listing.requested?(current_user) %>
-            <%= button_to "Request Donation", listing_donation_applications_path(:listing_id => @listing.id), :class => "button small radius", :id => "requestbutton", :method => :post %>
-            <% end %>
-          <% end %>
-      </div>
+        <% end %>
+      <% end %>
       <div class="small-4 medium-3 column end">
           <%= link_to "Back to Listings", session.delete(:listings_index) %>
         </div>
       </div>
+    <% if current_user %>
+    <% unless @listing.creator == current_user or @listing.requested?(current_user) %>
       <form action="<%= listing_donation_applications_path(:listing_id => @listing.id) %>" method="post">
         <input type="hidden" name="<%= request_forgery_protection_token.to_s %>" value="<%= form_authenticity_token %>">
-        <% if current_user and not already_requested? %>
             <div class="row button-row">
               <div class="small-4 medium-offset-4 medium-2 column">
                 Applicant Contact
@@ -48,10 +46,11 @@
             </div>
             <div class="row button-row">
               <div class="small-4 medium-offset-4 medium-3 column">
-                <button class="button small radius" id="requestbutton" type="submit">Request Donation</button>
+              <%= button_to "Request Donation", listing_donation_applications_path(:listing_id => @listing.id), :class => "button small radius", :id => "requestbutton", :method => :post %>
               </div>
             </div>
-        <% end %>
+      <% end %>
+    <% end %>
       </form>
       <% if current_user && (current_user == @listing.creator) %>
           <%= render 'donation_application_trackers/show_as_creator' %>

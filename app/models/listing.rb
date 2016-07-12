@@ -20,7 +20,7 @@ class Listing < ActiveRecord::Base
   end
 
   def requested?(user)
-    user.donation_applications.where(listing: self).present?
+    user && user.donation_applications.where(listing: self).present?
   end
 
   def followed?(user)
