@@ -26,7 +26,7 @@ class DonationApplicationsController < ApplicationController
       end
       # Mailer send
       if @listing.requires_pdf_form?
-        export_pdf and return
+        download_pdf and return
       else
         donation_application.update(submission_date: Time.now)
       end
@@ -110,16 +110,16 @@ class DonationApplicationsController < ApplicationController
     Listing.find(params[:listing_id])
   end
 
-  def get_pdf
+  def export_pdf
     DonationApplicationPdf.new(user: current_user, contact: @contact, listing: @listing).export
   end
 
-  def export_pdf
-    send_file(get_pdf, type: 'application/pdf')
+  def download_pdf
+    send_file(export_pdf, type: 'application/pdf')
   end
 
   def display_pdf
-    send_file(get_pdf, disposition: 'inline', type: 'application/pdf')
+    send_file(export_pdf, disposition: 'inline', type: 'application/pdf')
   end
 
   def donation_application_params
