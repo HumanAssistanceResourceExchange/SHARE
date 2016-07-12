@@ -1,16 +1,17 @@
-Dear <% if !@donee.entity_name.nil? %><% unless @donee.entity_name.empty? %><%= @donee.entity_name %><% end %><% elsif !@donee.contact_infos.nil? %><% unless @donee.contact_infos.empty? %><%= @donee.contact_infos.first.first_name %><% end %><% else %>SHARE User<% end %>,
+Dear <% if !@donee.entity_name.nil? %><% unless @donee.entity_name.empty? %><%= @donee.entity_name %><% end %><% elsif !@donee.contact_infos.nil? %><% @donee.contact_infos.each do |d| %><% if d and (d.primary or @donee.contact_infos.length == 1) %><%= d.first_name %><% end %><% end %><% else %>SHARE User<% end %>,
 
 
-You have requested <%= @listing.title %> from <% if !@donor.entity_name.nil? %><% unless @donor.entity_name.empty? %><%= @donor.entity_name %><% end %><% elsif !@listing.contact.nil? %><% unless @listing.contact.empty? %><%= @listing.contact.first_name %> <%= @listing.contact.last_name %><% end %><% end %>.
+You have requested <%= @listing.title %> <% if !@donor.entity_name.nil? %><% unless @donor.entity_name.empty? %>from <%= @donor.entity_name %><% end %><% elsif !@donor.contact_infos.nil? %><% @donor.contact_infos.each do |c| %><% if c and (c.primary or @donor.contact_infos.length == 1) %>from <%= c.first_name %><% end %><% end %><% end %>.
 
 
 <%= @listing.description %>
 
 
-You can watch the status of your request from your account dashboard at http://sac.hare.tech
+You can watch the status of your request from your account dashboard at http://s.hare.tech
 
 
 Thank You!
 
 
 Sacramento Human Assistance Resource Exchange (SHARE)
+
