@@ -10,7 +10,7 @@
         <h4><%= @listing.title %></h4>
         <p><%= @listing.description %></p>
         <p>Fair Market Value:
-          <%= @listing.fair_market_value.to_i %> USD
+          <%= formatted_price(@listing.fair_market_value) %>
         </p>
       </div>
     </div>
