@@ -10,6 +10,8 @@ gem 'therubyracer', platforms: :ruby
 gem 'normalize-rails'
 gem 'foundation-rails', '~> 5.5.3'
 gem 'font-awesome-rails', '~> 4.5'
+gem 'roo', '~> 2.3.2'
+gem 'roo-xls'
 
 gem 'figaro', '>= 1.0.0'
 gem 'jquery-rails'

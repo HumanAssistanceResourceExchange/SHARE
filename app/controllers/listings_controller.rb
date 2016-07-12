@@ -5,6 +5,7 @@ class ListingsController < ApplicationController
   before_action :authenticate_user!, except: [:index, :show]
 
   def new
+    @page_title = "Create New Listing"
     @listing = Listing.new
   end
 
@@ -33,6 +34,8 @@ class ListingsController < ApplicationController
     if current_user
       @application_submission = current_user.donation_applications.find_by(listing: @listing)
       applications = DonationApplication.includes(:applicant).where(listing: @listing).order(submission_date: :asc, created_at: :asc).reject { |da| da.submission_date.nil? }
+
+      @contact_list = current_user.contact_infos
 
       @applications_received = applications.map do | application |
         { tracker: application,
@@ -95,6 +98,32 @@ class ListingsController < ApplicationController
     end
 
     redirect_to :back
+  end
+
+  def new_import
+    # render
+  end
+
+  def import
+    file = params[:file]
+
+    if file.nil?
+      redirect_to import_listing_path, :notice => "No file chosen" and return
+    end
+
+    @importer = Importer.new({
+      creator: current_user,
+      import_type: "listing",
+      parser: SpreadsheetParser.new(file: file, import_type: "listing")
+    })
+
+    if @importer.import
+      message = "#{@importer.records_created} listings have been imported."
+      message += "\nErrors: " + @importer.errors.join("\n") if @importer.errors.any?
+      redirect_to user_donations_path(current_user), :notice => message and return
+    else
+      redirect_to import_listing_path, :notice => @importer.errors.join("\n") and return
+    end
   end
 
   private
