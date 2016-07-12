@@ -3,10 +3,16 @@ class DonationApplicationPdf < FillablePdfForm
   def initialize(args = {})
     @user = args[:user]
     @listing = args[:listing]
+    @donee_contact = args[:contact]
     @user_questionnaire = Questionnaire.find_by(name: @user.account_type)
     address = @user.addresses.find_by(primary: true) || @user.addresses.first
-    contact = @user.contact_infos.find_by(primary: true) || @user.contact_infos.first
     @address = get_sanitized_attributes(address, Address.new)
+    contact = ContactInfo.find(@donee_contact) || @user.contact_infos.find_by(primary: true) || @user.contact_infos.first
+    #unless @donee_contact.nil?
+    #  contact = ContactInfo.find(@donee_contact)
+    #else
+    #  contact = @user.contact_infos.find_by(primary: true) || @user.contact_infos.first
+    #end
     @contact = get_sanitized_attributes(contact, ContactInfo.new)
     @contact_name = "#{@contact[:first_name]} #{@contact[:last_name]}".titleize
     super()

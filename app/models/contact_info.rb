@@ -1,5 +1,6 @@
 class ContactInfo < ActiveRecord::Base
   belongs_to :user
+  belongs_to :donation_application
 
   validates :first_name, presence: true
   validates :last_name, presence: true

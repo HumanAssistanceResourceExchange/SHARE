@@ -4,9 +4,16 @@ class DonationApplicationsController < ApplicationController
 
   def create
     @listing = Listing.find(params[:listing_id])
+    donee_contact_id = params[:contact]
     submission_status ||= "printed" if @listing.requires_pdf_form?
     submission_status ||= "emailed"
-    donation_application = DonationApplication.new(applicant: current_user, listing: @listing, submission_status: submission_status)
+    if donee_contact_id.blank?
+      @donee_contact = nil
+    else
+      @donee_contact = ContactInfo.find(params[:contact])
+    end
+
+    donation_application = DonationApplication.new(applicant: current_user, contact: @donee_contact, listing: @listing, submission_status: submission_status)
 
     if donation_application.save
       unless @listing.followers.include?(current_user)
