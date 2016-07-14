@@ -12,7 +12,7 @@
       <tr>
         <td>
         <% if @listing.requires_pdf_form? %>
-            <%= link_to "View Form", listing_donation_application_path(@listing), :target => '_blank' %>
+            <%= link_to "View Form", listing_donation_application_path(listing_id: @listing.id, id: @application_submission.id), :target => '_blank' %>
         <% else %>
             Email
         <% end %>

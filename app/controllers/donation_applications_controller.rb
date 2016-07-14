@@ -41,7 +41,8 @@ class DonationApplicationsController < ApplicationController
   end
 
   def show
-    display_pdf(@listing.export_pdf)
+    donation_application = DonationApplication.find(params[:id])
+    display_pdf(donation_application.export_pdf)
   end
 
   def update_mailed_submission
