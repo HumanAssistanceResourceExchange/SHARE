@@ -26,7 +26,7 @@ class DonationApplicationsController < ApplicationController
       end
       # Mailer send
       if @listing.requires_pdf_form?
-        download_pdf and return
+        download_pdf(donation_application.export_pdf) and return
       else
         donation_application.update(submission_date: Time.now)
       end
@@ -41,7 +41,7 @@ class DonationApplicationsController < ApplicationController
   end
 
   def show
-    display_pdf
+    display_pdf(@listing.export_pdf)
   end
 
   def update_mailed_submission
@@ -58,7 +58,6 @@ class DonationApplicationsController < ApplicationController
 
     redirect_to listing_path(listing)
   end
-
 
   def approve_applicant
     listing = set_listing
@@ -110,16 +109,12 @@ class DonationApplicationsController < ApplicationController
     Listing.find(params[:listing_id])
   end
 
-  def export_pdf
-    DonationApplicationPdf.new(user: current_user, contact: @contact, listing: @listing).export
+  def download_pdf(pdf)
+    send_file(pdf, type: 'application/pdf')
   end
 
-  def download_pdf
-    send_file(export_pdf, type: 'application/pdf')
-  end
-
-  def display_pdf
-    send_file(export_pdf, disposition: 'inline', type: 'application/pdf')
+  def display_pdf(pdf)
+    send_file(pdf, disposition: 'inline', type: 'application/pdf')
   end
 
   def donation_application_params
