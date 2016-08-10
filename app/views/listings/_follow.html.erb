@@ -4,7 +4,7 @@
         <%= content_tag(:i, "", :class => "fa fa-eye-slash fa-lg") %>
         Un-Watch<% end %>
     <% else %>
-        <%= link_to [ :follow, @listing ] do %>
+        <%= link_to [ :follow, @listing ], :method=> :post do %>
         <%= content_tag(:i, "", :class => "fa fa-eye fa-lg") %>
         Watch<% end %>
     <% end %>
