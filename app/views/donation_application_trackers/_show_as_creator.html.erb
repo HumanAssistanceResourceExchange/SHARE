@@ -13,7 +13,7 @@
     <% @applications_received.each do |app| %>
     <tr>
         <td><%= "#{app.first_name} #{app.last_name}".titleize %></td>
-        <td><%= email_formatter(app.email) %></td>
+        <td><%= format_email(app.email) %></td>
         <td><%= date_format(app.submission_date) %></td>
       <% if app.approval_status %>
         <td><%= app.approval_status.titleize %></td>

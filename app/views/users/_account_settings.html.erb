@@ -11,7 +11,7 @@
   <tbody>
       <tr>
         <td><%= @user.account_type.titleize %></td>
-        <td><%= email_break_oppty(@user.email.downcase) %></td>
+        <td><%= format_email(@user.email.downcase) %></td>
         <td><%= link_to "Change Email / Password", edit_user_registration_path %></td>
       </tr>
   </tbody>
